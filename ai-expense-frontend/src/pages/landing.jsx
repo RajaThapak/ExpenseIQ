@@ -37,19 +37,19 @@ export default function Landing() {
         </button>
       </div>
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[-6rem] top-10 h-[32rem] w-[32rem] rounded-full bg-violet-300/35 blur-3xl animate-[floatSlow_14s_ease-in-out_infinite]" />
+        <div className="absolute left-[-6rem] top-10 h-[32rem] w-[32rem] rounded-full bg-violet-300/35 blur-3xl animate-[floatSlow_28s_ease-in-out_infinite]" />
         <div className="absolute right-[-8rem] top-6 h-[36rem] w-[36rem] rounded-full bg-indigo-300/30 blur-3xl animate-[floatSlow_18s_ease-in-out_infinite_reverse]" />
         <div className="absolute left-1/4 bottom-[-10rem] h-[28rem] w-[28rem] rounded-full bg-fuchsia-300/20 blur-3xl animate-[floatSlow_16s_ease-in-out_infinite]" />
         <div className="absolute right-1/3 top-[16%] h-32 w-32 rounded-full border border-violet-200/45 bg-white/35 backdrop-blur-md animate-[floatSlow_10s_ease-in-out_infinite]" />
         <div className="absolute bottom-[14%] right-[16%] h-24 w-24 rounded-full border border-indigo-200/50 bg-white/30 backdrop-blur-md animate-[floatSlow_12s_ease-in-out_infinite_reverse]" />
-        <div className="absolute left-[18%] top-[42%] h-20 w-20 rounded-full border border-fuchsia-200/40 bg-white/20 backdrop-blur-md animate-[floatSlow_11s_ease-in-out_infinite]" />
+        <div className="absolute left-[18%] top-[42%] h-20 w-20 rounded-full border border-fuchsia-200/40 bg-white/20 backdrop-blur-md animate-[floatSlow_24s_ease-in-out_infinite]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,rgba(255,255,255,0),rgba(91,75,255,0.08))]" />
       </div>
 
       <style>{`
         @keyframes floatSlow {
           0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-          50% { transform: translate3d(0, -18px, 0) scale(1.04); }
+          50% { transform: translate3d(0, -10px, 0) scale(1.02); }
         }
 
         @keyframes bgShift {
@@ -60,6 +60,11 @@ export default function Landing() {
         @keyframes bgFloat {
           0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
           50% { transform: translate3d(0, -24px, 0) scale(1.06); }
+        }
+
+        @keyframes spinSlow {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
       `}</style>
@@ -162,10 +167,10 @@ export default function Landing() {
 
           <div className="relative flex min-h-[24rem] items-center justify-center lg:min-h-[42rem]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(91,75,255,0.18),transparent_32%),radial-gradient(circle_at_78%_32%,rgba(99,102,241,0.16),transparent_28%),radial-gradient(circle_at_62%_78%,rgba(196,181,253,0.18),transparent_26%)]" />
-            <div className="absolute right-0 top-8 h-56 w-56 rounded-full bg-white/55 blur-2xl sm:h-72 sm:w-72 animate-[floatSlow_18s_ease-in-out_infinite]" />
-            <div className="absolute left-8 top-16 h-24 w-24 rounded-full bg-violet-200/35 blur-2xl sm:h-32 sm:w-32 animate-[floatSlow_12s_ease-in-out_infinite_reverse]" />
-            <div className="absolute bottom-8 right-8 h-28 w-28 rounded-full border border-white/70 bg-white/35 shadow-[0_20px_40px_rgba(99,102,241,0.14)] backdrop-blur-xl sm:h-36 sm:w-36 animate-[floatSlow_14s_ease-in-out_infinite]" />
-            <div className="absolute right-12 top-1/3 h-14 w-14 rounded-full border border-white/80 bg-white/50 shadow-[0_12px_24px_rgba(99,102,241,0.18)] backdrop-blur-xl sm:h-20 sm:w-20 animate-[floatSlow_10s_ease-in-out_infinite_reverse]" />
+            <div className="absolute right-0 top-8 h-56 w-56 rounded-full bg-white/55 blur-2xl sm:h-72 sm:w-72 animate-[floatSlow_28s_ease-in-out_infinite]" />
+            <div className="absolute left-8 top-16 h-24 w-24 rounded-full bg-violet-200/35 blur-2xl sm:h-32 sm:w-32 animate-[floatSlow_24s_ease-in-out_infinite_reverse]" />
+            <div className="absolute bottom-8 right-8 h-28 w-28 rounded-full border border-white/70 bg-white/35 shadow-[0_20px_40px_rgba(99,102,241,0.14)] backdrop-blur-xl sm:h-36 sm:w-36 animate-[floatSlow_26s_ease-in-out_infinite]" />
+            <div className="absolute right-12 top-1/3 h-14 w-14 rounded-full border border-white/80 bg-white/50 shadow-[0_12px_24px_rgba(99,102,241,0.18)] backdrop-blur-xl sm:h-20 sm:w-20 animate-[floatSlow_30s_ease-in-out_infinite_reverse]" />
 
             <div className="relative hidden h-[34rem] w-full max-w-[26rem] lg:block">
               <div className="absolute inset-0 rounded-[3rem] border border-white/70 bg-[linear-gradient(145deg,rgba(255,255,255,0.92)_0%,rgba(243,240,255,0.86)_45%,rgba(227,232,255,0.72)_100%)] shadow-[0_30px_80px_rgba(91,75,255,0.16)] backdrop-blur-md" />
@@ -180,29 +185,31 @@ export default function Landing() {
                 </span>
               </div>
 
-              <div className="absolute left-10 top-24 h-56 w-72 rounded-[2.5rem] border border-slate-900/5 bg-[#09090b] p-4 shadow-[0_28px_60px_rgba(15,23,42,0.18)] animate-[floatSlow_11s_ease-in-out_infinite]">
+              <div className="absolute left-10 top-24 h-56 w-72 rounded-[2.5rem] border border-slate-900/5 bg-[#09090b] p-4 shadow-[0_28px_60px_rgba(15,23,42,0.18)] animate-[floatSlow_28s_ease-in-out_infinite] will-change-transform">
                 <div className="absolute left-7 top-8 h-20 w-44 rounded-[2rem] bg-[linear-gradient(135deg,#b4ff1f_0%,#d7ff3d_100%)] shadow-[0_18px_35px_rgba(180,255,31,0.25)] rotate-[-18deg]" />
                 <div className="absolute right-6 top-5 h-24 w-16 rotate-[18deg] rounded-[1.2rem] bg-[linear-gradient(180deg,#b277ff_0%,#7c3aed_100%)]" />
                 <div className="absolute right-12 top-24 h-28 w-28 rounded-full bg-violet-200/90 shadow-[0_18px_30px_rgba(168,85,247,0.22)]" />
-                <div className="absolute left-12 bottom-8 h-20 w-20 rounded-full bg-white/92 shadow-[0_16px_32px_rgba(255,255,255,0.18)]" />
-                <div className="absolute left-20 bottom-11 text-4xl font-black tracking-[-0.08em] text-slate-950">
-                  $
+                <div className="absolute left-12 bottom-8 flex h-20 w-20 items-center justify-center rounded-full bg-white/92 shadow-[0_16px_32px_rgba(255,255,255,0.18)]">
+                  <span className="text-4xl font-black leading-none tracking-[-0.08em] text-slate-950">
+                    $
+                  </span>
                 </div>
                 <div className="absolute right-8 bottom-10 h-14 w-14 rounded-[1.5rem] bg-violet-500/90" />
               </div>
 
-              <div className="absolute right-6 top-32 h-60 w-44 rotate-[15deg] rounded-[2.5rem] border border-slate-900/5 bg-[linear-gradient(180deg,#c6ff24_0%,#d8ff3f_100%)] shadow-[0_28px_60px_rgba(91,75,255,0.16)] animate-[floatSlow_13s_ease-in-out_infinite_reverse]">
-                <div className="absolute left-5 top-6 h-20 w-20 rounded-full bg-violet-600/95 shadow-[0_14px_30px_rgba(91,75,255,0.25)]" />
-                <div className="absolute left-5 top-6 text-4xl font-black text-white">$</div>
+              <div className="absolute right-6 top-32 h-60 w-44 rotate-[15deg] rounded-[2.5rem] border border-slate-900/5 bg-[linear-gradient(180deg,#c6ff24_0%,#d8ff3f_100%)] shadow-[0_28px_60px_rgba(91,75,255,0.16)] animate-[floatSlow_32s_ease-in-out_infinite_reverse] will-change-transform">
+                <div className="absolute left-5 top-6 flex h-20 w-20 items-center justify-center rounded-full bg-violet-600/95 shadow-[0_14px_30px_rgba(91,75,255,0.25)]">
+                  <span className="text-4xl font-black leading-none text-white">$</span>
+                </div>
                 <div className="absolute bottom-6 right-5 text-3xl font-black tracking-[-0.08em] text-[#09090b]">
                   Debit
                 </div>
                 <div className="absolute -left-8 top-16 h-20 w-20 rounded-full border-[10px] border-violet-300/90 border-r-transparent border-b-transparent" />
               </div>
 
-              <div className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/75 bg-white/80 shadow-[0_18px_35px_rgba(91,75,255,0.14)] animate-[spinSlow_16s_linear_infinite]" />
+              <div className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/75 bg-white/80 shadow-[0_18px_35px_rgba(91,75,255,0.14)] animate-[spinSlow_26s_linear_infinite] will-change-transform" />
 
-              <div className="absolute left-16 bottom-10 h-24 w-24 rotate-[-8deg] rounded-[2rem] bg-[linear-gradient(180deg,#8b5cf6_0%,#6d28d9_100%)] shadow-[0_20px_45px_rgba(91,75,255,0.24)] animate-[floatSlow_14s_ease-in-out_infinite]" />
+              <div className="absolute left-16 bottom-10 h-24 w-24 rotate-[-8deg] rounded-[2rem] bg-[linear-gradient(180deg,#8b5cf6_0%,#6d28d9_100%)] shadow-[0_20px_45px_rgba(91,75,255,0.24)] animate-[floatSlow_30s_ease-in-out_infinite] will-change-transform" />
               <div className="absolute left-28 bottom-20 h-16 w-16 rounded-[1.4rem] border border-white/70 bg-white/70 shadow-[0_14px_25px_rgba(91,75,255,0.10)] animate-[floatSlow_9s_ease-in-out_infinite_reverse]" />
               <div className="absolute right-24 bottom-18 h-16 w-16 rounded-full border border-violet-200/70 bg-white/80 shadow-[0_12px_25px_rgba(91,75,255,0.12)] animate-[floatSlow_12s_ease-in-out_infinite]" />
             </div>
