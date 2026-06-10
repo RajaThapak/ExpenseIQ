@@ -1,12 +1,65 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import Logo from "../assets/Logo.png";
+import { LoginForm } from "./login";
+import { RegisterForm } from "./Register";
 
 export default function Landing() {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
+  const openLogin = () => setIsLoginOpen(true);
+  const openRegister = () => setIsRegisterOpen(true);
+  const closeAuth = () => {
+    setIsLoginOpen(false);
+    setIsRegisterOpen(false);
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-[linear-gradient(180deg,_#ffffff_0%,_#f8f7ff_100%)] text-slate-900">
+      <div className="absolute top-6 right-6 z-50 flex items-center gap-3">
+        <button
+          type="button"
+          onClick={openLogin}
+          className="rounded-full px-4 py-2 text-sm font-semibold text-slate-700 hover:text-slate-900"
+        >
+          Login
+        </button>
+
+        <button
+          type="button"
+          onClick={openRegister}
+          className="rounded-2xl bg-gradient-to-r from-[#5b4bff] to-[#6d28d9] px-4 py-2 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(91,75,255,0.18)] hover:brightness-105"
+        >
+          Register
+        </button>
+      </div>
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-5rem] top-20 h-56 w-56 rounded-full bg-violet-200/25 blur-3xl" />
         <div className="absolute right-[-4rem] bottom-6 h-64 w-64 rounded-full bg-indigo-200/20 blur-3xl" />
       </div>
+
+      {(isLoginOpen || isRegisterOpen) ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/35 px-6 py-8 backdrop-blur-sm"
+          onClick={closeAuth}
+        >
+          <div className="w-full max-w-md" onClick={(event) => event.stopPropagation()}>
+            {isRegisterOpen ? (
+              <RegisterForm onLoginClick={() => {
+                setIsRegisterOpen(false);
+                setIsLoginOpen(true);
+              }} onClose={closeAuth} />
+            ) : (
+              <LoginForm onRegisterClick={() => {
+                setIsLoginOpen(false);
+                setIsRegisterOpen(true);
+              }} onClose={closeAuth} />
+            )}
+          </div>
+        </div>
+      ) : null}
 
       <main className="relative mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 py-8 sm:px-10 lg:px-16 lg:py-10">
         <section className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
@@ -20,7 +73,7 @@ export default function Landing() {
 
               <div>
                 <h2 className="text-[2rem] font-extrabold leading-none tracking-[-0.05em] text-slate-900 sm:text-[2.1rem]">
-                  Expenso<span className="text-[#4f46e5]">AI</span>
+                  Expense<span className="text-[#4f46e5]">IQ</span>
                 </h2>
                 <p className="mt-1 text-sm font-medium text-slate-500 sm:text-base">
                   Smart Expense Tracker
@@ -67,7 +120,11 @@ export default function Landing() {
             </div>
 
             <div className="mt-11 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <button className="inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#5b4bff] to-[#6d28d9] px-8 py-4 text-[1rem] font-semibold text-white shadow-[0_18px_45px_rgba(91,75,255,0.28)] transition hover:brightness-105">
+              <button
+                type="button"
+                onClick={openLogin}
+                className="inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#5b4bff] to-[#6d28d9] px-8 py-4 text-[1rem] font-semibold text-white shadow-[0_18px_45px_rgba(91,75,255,0.28)] transition hover:brightness-105"
+              >
                 Start Tracking Now
                 <ArrowIcon />
               </button>
