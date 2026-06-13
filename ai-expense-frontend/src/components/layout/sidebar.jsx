@@ -19,7 +19,7 @@ export default function Sidebar() {
 				</div>
 				<div>
 					<p className="text-xl font-black tracking-[-0.05em] text-slate-950">
-						ExpensoAI
+						ExpenseIQ
 					</p>
 					<p className="text-xs font-medium uppercase tracking-[0.24em] text-slate-500">
 						Smart expense tracking

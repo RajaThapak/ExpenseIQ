@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 
+import Navbar from "./navbar";
 import Sidebar from "./sidebar";
 
 export default function DashboardLayout() {
@@ -9,11 +10,15 @@ export default function DashboardLayout() {
         <Sidebar />
       </div>
 
-      <main className="flex-1 px-4 py-4 sm:px-6 lg:px-8 lg:py-8">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
-          <Outlet />
-        </div>
-      </main>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <Navbar />
+
+        <main className="flex-1 px-4 py-4 sm:px-6 lg:px-8 lg:py-8">
+          <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">
+            <Outlet />
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
