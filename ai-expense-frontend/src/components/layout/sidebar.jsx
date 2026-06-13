@@ -14,9 +14,11 @@ export default function Sidebar() {
 	return (
 		<aside className="flex h-full w-full flex-col bg-[linear-gradient(180deg,#ffffff_0%,#faf7ff_100%)] px-5 py-6 shadow-[0_24px_60px_rgba(91,75,255,0.08)] lg:w-72 lg:border-r lg:border-slate-200/70">
 			<div className="mb-8 flex items-center gap-3 px-1">
-				<div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#5b4bff_0%,#6d28d9_100%)] text-lg font-black text-white shadow-[0_16px_30px_rgba(91,75,255,0.25)]">
-					E
-				</div>
+				<img
+					src="/favicon.png"
+					alt="ExpenseIQ logo"
+					className="h-11 w-11 shrink-0 rounded-2xl object-cover shadow-[0_16px_30px_rgba(91,75,255,0.25)]"
+				/>
 				<div>
 					<p className="text-xl font-black tracking-[-0.05em] text-slate-950">
 						ExpenseIQ
