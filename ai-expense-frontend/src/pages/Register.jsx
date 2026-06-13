@@ -1,4 +1,21 @@
+import { useNavigate } from "react-router-dom";
+
+const AUTH_KEY = "expenseiq-auth";
+
 export function RegisterForm({ onClose, onLoginClick }) {
+	const navigate = useNavigate();
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		localStorage.setItem(AUTH_KEY, "true");
+
+		if (typeof onClose === "function") {
+			onClose();
+		}
+
+		navigate("/dashboard");
+	};
+
 	return (
 		<div className="relative w-full max-w-md rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_30px_80px_rgba(91,75,255,0.18)] backdrop-blur-xl">
 			<button
@@ -21,7 +38,7 @@ export function RegisterForm({ onClose, onLoginClick }) {
 				</p>
 			</div>
 
-			<form className="space-y-4">
+			<form className="space-y-4" onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor="register-name" className="mb-2 block text-sm font-semibold text-slate-700">
 						Full name
