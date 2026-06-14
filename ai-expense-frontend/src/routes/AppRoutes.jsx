@@ -38,7 +38,7 @@ export default function AppRoutes() {
           <Route path="budgets" element={<Budgets />} />
           <Route path="reports" element={<Reports />} />
           <Route path="ai-insights" element={<AIInsights />} />
-          <Route path="settings" element={<Settings />} />
+          
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
