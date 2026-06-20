@@ -1,20 +1,42 @@
+import { useState } from "react";
+
+import AddCategoryModal from "../components/categories/add-category-modal";
 import {
 	CategoryDonutChart,
 	CategoryIcon,
 	Panel,
 	PrimaryButton,
 } from "../components/dashboard/dashboard-ui";
-import { categories, formatINR } from "../data/mock-data";
+import { categories as initialCategories, formatINR } from "../data/mock-data";
 
 export default function Categories() {
+	const [modalOpen, setModalOpen] = useState(false);
+	const [categoryList, setCategoryList] = useState(initialCategories);
+
+	function handleSaveCategory(form) {
+		const budget = Number(form.budgetLimit) || 0;
+		const totalAmount = categoryList.reduce((sum, item) => sum + item.amount, 0) + budget;
+
+		setCategoryList((current) => [
+			...current,
+			{
+				name: form.name,
+				amount: budget,
+				percent: totalAmount > 0 ? Math.round((budget / totalAmount) * 100) : 0,
+				color: form.color,
+				icon: form.icon,
+			},
+		]);
+	}
+
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="flex justify-end">
-				<PrimaryButton>Add Category</PrimaryButton>
+				<PrimaryButton onClick={() => setModalOpen(true)}>Add Category</PrimaryButton>
 			</div>
 
 			<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-				{categories.map((category) => (
+				{categoryList.map((category) => (
 					<div
 						key={category.name}
 						className="rounded-2xl border border-slate-200/70 bg-white p-5 shadow-[0_10px_30px_rgba(15,23,42,0.04)] transition hover:shadow-[0_16px_40px_rgba(15,23,42,0.06)]"
@@ -36,8 +58,14 @@ export default function Categories() {
 			</div>
 
 			<Panel title="Category Breakdown">
-				<CategoryDonutChart data={categories} showCenter />
+				<CategoryDonutChart data={categoryList} showCenter />
 			</Panel>
+
+			<AddCategoryModal
+				open={modalOpen}
+				onClose={() => setModalOpen(false)}
+				onSave={handleSaveCategory}
+			/>
 		</div>
 	);
 }

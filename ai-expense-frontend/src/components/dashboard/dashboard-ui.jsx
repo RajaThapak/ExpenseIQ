@@ -259,10 +259,11 @@ export function AIInsightCard({ title, message, actionLabel = "View Details" }) 
 	);
 }
 
-export function PrimaryButton({ children, className = "", icon = "plus" }) {
+export function PrimaryButton({ children, className = "", icon = "plus", onClick }) {
 	return (
 		<button
 			type="button"
+			onClick={onClick}
 			className={`inline-flex items-center gap-2 rounded-xl bg-[#6366f1] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#4f46e5] ${className}`}
 		>
 			{icon === "plus" ? <PlusIcon /> : icon === "export" ? <ExportIcon /> : null}
