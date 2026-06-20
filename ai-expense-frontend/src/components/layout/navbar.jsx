@@ -6,7 +6,7 @@ const PAGE_TITLES = {
 	"/dashboard/expenses": "Expenses",
 	"/dashboard/categories": "Categories",
 	"/dashboard/budgets": "Budgets",
-	"/dashboard/reports": "Reports",
+	"/dashboard/reports": "Reports & Analytics",
 	"/dashboard/ai-insights": "AI Insights",
 	"/dashboard/settings": "Settings",
 };
@@ -29,6 +29,14 @@ export default function Navbar() {
 				</div>
 
 				<div className="flex shrink-0 items-center gap-4">
+					<button
+						type="button"
+						className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition hover:bg-slate-50"
+						aria-label="Search"
+					>
+						<SearchIcon />
+					</button>
+
 					<button
 						type="button"
 						className="relative flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 transition hover:bg-slate-50"
@@ -93,6 +101,15 @@ export default function Navbar() {
 				</div>
 			</div>
 		</header>
+	);
+}
+
+function SearchIcon() {
+	return (
+		<svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+			<circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.8" />
+			<path d="m16 16 4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+		</svg>
 	);
 }
 

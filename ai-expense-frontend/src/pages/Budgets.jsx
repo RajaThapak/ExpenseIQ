@@ -1,36 +1,78 @@
-import DashboardPageShell from "../components/layout/dashboard-page-shell";
+import {
+	AIInsightCard,
+	BudgetComparisonChart,
+	CategoryIcon,
+	Panel,
+	PrimaryButton,
+} from "../components/dashboard/dashboard-ui";
+import { budgets, formatINR } from "../data/mock-data";
 
 export default function Budgets() {
-  return (
-    <DashboardPageShell
-      eyebrow="Budgets"
-      title="Stay on top of limits"
-      description="Monitor monthly caps and see where you still have room to spend."
-    >
-      <div className="grid gap-4 md:grid-cols-2">
-        <BudgetCard name="Home" amount="$1,100" progress="78%" />
-        <BudgetCard name="Entertainment" amount="$320" progress="54%" />
-      </div>
-    </DashboardPageShell>
-  );
-}
+	const chartData = budgets.map((item) => ({
+		name: item.name.split(" ")[0],
+		budget: item.budget,
+		spent: item.spent,
+	}));
 
-function BudgetCard({ name, amount, progress }) {
-  return (
-    <div className="rounded-[1.5rem] border border-slate-200/70 bg-white p-5 shadow-[0_14px_30px_rgba(15,23,42,0.05)]">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <p className="text-sm font-semibold text-slate-500">Budget</p>
-          <h2 className="mt-1 text-2xl font-black tracking-[-0.04em] text-slate-950">{name}</h2>
-        </div>
-        <p className="text-lg font-bold text-[#4f46e5]">{amount}</p>
-      </div>
+	return (
+		<div className="flex flex-col gap-6">
+			<div className="flex justify-end">
+				<PrimaryButton>Create Budget</PrimaryButton>
+			</div>
 
-      <div className="mt-5 h-3 rounded-full bg-slate-100">
-        <div className="h-3 rounded-full bg-[linear-gradient(90deg,#5b4bff_0%,#6d28d9_100%)]" style={{ width: progress }} />
-      </div>
+			<Panel title="Budget Progress">
+				<div className="space-y-5">
+					{budgets.map((item) => {
+						const percent = Math.round((item.spent / item.budget) * 100);
+						const isOverBudget = percent >= 90;
 
-      <p className="mt-3 text-sm font-medium text-slate-500">Used {progress} of this budget</p>
-    </div>
-  );
+						return (
+							<div key={item.name}>
+								<div className="mb-2 flex items-center justify-between gap-4">
+									<div className="flex items-center gap-3">
+										<CategoryIcon type={item.icon} color={item.color} size="sm" />
+										<span className="font-semibold text-slate-900">{item.name}</span>
+									</div>
+									<span className="text-sm font-medium text-slate-600">
+										{formatINR(item.spent)} / {formatINR(item.budget)}
+									</span>
+								</div>
+								<div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
+									<div
+										className="h-full rounded-full transition-all"
+										style={{
+											width: `${Math.min(percent, 100)}%`,
+											backgroundColor: isOverBudget ? "#ef4444" : item.color,
+										}}
+									/>
+								</div>
+								<p className="mt-1.5 text-xs text-slate-400">{percent}% used</p>
+							</div>
+						);
+					})}
+				</div>
+			</Panel>
+
+			<div className="grid gap-6 xl:grid-cols-2">
+				<Panel title="Budget vs Actual">
+					<BudgetComparisonChart data={chartData} />
+					<div className="mt-4 flex items-center justify-center gap-6 text-xs text-slate-500">
+						<span className="flex items-center gap-2">
+							<span className="h-2.5 w-2.5 rounded-sm bg-indigo-200" />
+							Budget
+						</span>
+						<span className="flex items-center gap-2">
+							<span className="h-2.5 w-2.5 rounded-sm bg-indigo-500" />
+							Actual
+						</span>
+					</div>
+				</Panel>
+
+				<AIInsightCard
+					title="Budget Assistant"
+					message="You are close to exceeding your Food & Dining budget. Recommended daily limit ₹100 / day."
+				/>
+			</div>
+		</div>
+	);
 }

@@ -55,10 +55,16 @@ export default function Sidebar() {
 			</nav>
 
 			<div className="mt-6 rounded-[1.75rem] bg-[linear-gradient(135deg,rgba(91,75,255,0.12),rgba(255,255,255,0.9))] p-4 text-slate-700 shadow-[0_16px_40px_rgba(91,75,255,0.08)]">
-				<p className="text-sm font-semibold text-slate-900">Weekly summary</p>
+				<p className="text-sm font-semibold text-slate-900">Upgrade to Premium</p>
 				<p className="mt-1 text-sm leading-6 text-slate-600">
-					Keep an eye on your spending trends and review AI suggestions from the sidebar.
+					Unlock advanced AI insights, unlimited budgets, and detailed reports.
 				</p>
+				<button
+					type="button"
+					className="mt-4 w-full rounded-xl bg-[#6366f1] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#4f46e5]"
+				>
+					Upgrade Now
+				</button>
 			</div>
 		</aside>
 	);

@@ -1,26 +1,43 @@
-import DashboardPageShell from "../components/layout/dashboard-page-shell";
+import {
+	CategoryDonutChart,
+	CategoryIcon,
+	Panel,
+	PrimaryButton,
+} from "../components/dashboard/dashboard-ui";
+import { categories, formatINR } from "../data/mock-data";
 
 export default function Categories() {
-  return (
-    <DashboardPageShell
-      eyebrow="Categories"
-      title="Organize your spending"
-      description="Group transactions into meaningful categories and keep your dashboard easy to scan."
-    >
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <StatCard label="Food & Dining" value="$1,240" tone="from-amber-100 to-orange-50" />
-        <StatCard label="Transport" value="$420" tone="from-sky-100 to-cyan-50" />
-        <StatCard label="Subscriptions" value="$186" tone="from-violet-100 to-fuchsia-50" />
-      </div>
-    </DashboardPageShell>
-  );
-}
+	return (
+		<div className="flex flex-col gap-6">
+			<div className="flex justify-end">
+				<PrimaryButton>Add Category</PrimaryButton>
+			</div>
 
-function StatCard({ label, value, tone }) {
-  return (
-    <div className={`rounded-[1.5rem] bg-gradient-to-br ${tone} p-5 shadow-[0_14px_30px_rgba(15,23,42,0.05)]`}>
-      <p className="text-sm font-semibold text-slate-600">{label}</p>
-      <p className="mt-3 text-3xl font-black tracking-[-0.05em] text-slate-950">{value}</p>
-    </div>
-  );
+			<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+				{categories.map((category) => (
+					<div
+						key={category.name}
+						className="rounded-2xl border border-slate-200/70 bg-white p-5 shadow-[0_10px_30px_rgba(15,23,42,0.04)] transition hover:shadow-[0_16px_40px_rgba(15,23,42,0.06)]"
+					>
+						<CategoryIcon type={category.icon} color={category.color} />
+						<h3 className="mt-4 text-base font-bold text-slate-900">{category.name}</h3>
+						<p className="mt-2 text-2xl font-bold tracking-tight text-slate-900">
+							{formatINR(category.amount)}
+						</p>
+						<p className="mt-1 text-sm font-medium text-slate-500">{category.percent}% of total spending</p>
+						<div className="mt-4 h-1.5 overflow-hidden rounded-full bg-slate-100">
+							<div
+								className="h-full rounded-full"
+								style={{ width: `${category.percent}%`, backgroundColor: category.color }}
+							/>
+						</div>
+					</div>
+				))}
+			</div>
+
+			<Panel title="Category Breakdown">
+				<CategoryDonutChart data={categories} showCenter />
+			</Panel>
+		</div>
+	);
 }
