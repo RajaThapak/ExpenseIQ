@@ -1,3 +1,6 @@
+import { useState } from "react";
+
+import CreateBudgetModal from "../components/budgets/create-budget-modal";
 import {
 	AIInsightCard,
 	BudgetComparisonChart,
@@ -8,6 +11,7 @@ import {
 import { budgets, formatINR } from "../data/mock-data";
 
 export default function Budgets() {
+	const [modalOpen, setModalOpen] = useState(false);
 	const chartData = budgets.map((item) => ({
 		name: item.name.split(" ")[0],
 		budget: item.budget,
@@ -17,7 +21,7 @@ export default function Budgets() {
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="flex justify-end">
-				<PrimaryButton>Create Budget</PrimaryButton>
+				<PrimaryButton onClick={() => setModalOpen(true)}>Create Budget</PrimaryButton>
 			</div>
 
 			<Panel title="Budget Progress">
@@ -73,6 +77,11 @@ export default function Budgets() {
 					message="You are close to exceeding your Food & Dining budget. Recommended daily limit ₹100 / day."
 				/>
 			</div>
+
+			<CreateBudgetModal
+				open={modalOpen}
+				onClose={() => setModalOpen(false)}
+			/>
 		</div>
 	);
 }
