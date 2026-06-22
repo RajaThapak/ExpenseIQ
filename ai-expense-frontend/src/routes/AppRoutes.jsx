@@ -10,7 +10,7 @@ import Login from "../pages/login";
 import Register from "../pages/Register";
 import Reports from "../pages/Reports";
 import Settings from "../pages/Settings";
-import Transactions from "../pages/Transactions";
+import  Expense from "../pages/Expense";
 
 const AUTH_KEY = "expenseiq-auth";
 
@@ -33,7 +33,7 @@ export default function AppRoutes() {
       <Route element={<RequireAuth />}>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path="expenses" element={<Transactions />} />
+          <Route path="expenses" element={<Expense />} />
           <Route path="categories" element={<Categories />} />
           <Route path="budgets" element={<Budgets />} />
           <Route path="reports" element={<Reports />} />
