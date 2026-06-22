@@ -25,19 +25,16 @@ const INITIAL_FORM = {
 };
 
 export default function AddCategoryModal({ open, onClose, onSave }) {
+	if (!open) return null;
+
+	return <AddCategoryModalContent onClose={onClose} onSave={onSave} />;
+}
+
+function AddCategoryModalContent({ onClose, onSave }) {
 	const [form, setForm] = useState(INITIAL_FORM);
 	const [iconOpen, setIconOpen] = useState(false);
 
 	useEffect(() => {
-		if (!open) {
-			setForm(INITIAL_FORM);
-			setIconOpen(false);
-		}
-	}, [open]);
-
-	useEffect(() => {
-		if (!open) return undefined;
-
 		const handleKeyDown = (event) => {
 			if (event.key === "Escape") onClose();
 		};
@@ -49,9 +46,7 @@ export default function AddCategoryModal({ open, onClose, onSave }) {
 			document.body.style.overflow = "";
 			window.removeEventListener("keydown", handleKeyDown);
 		};
-	}, [open, onClose]);
-
-	if (!open) return null;
+	}, [onClose]);
 
 	const selectedIcon = ICON_OPTIONS.find((option) => option.id === form.icon) ?? ICON_OPTIONS[0];
 	const descriptionLength = form.description.length;
