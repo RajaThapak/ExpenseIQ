@@ -24,5 +24,6 @@ urlpatterns = [
         "api/categories/",
         include("categories.urls")
     ),
+    path("api/expenses/", include("expenses.urls")),
     
 ]
