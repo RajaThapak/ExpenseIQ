@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "categories",
     "expenses",
     "budgets",
+    "dashboard",
 ]
 
 # Custom User Model
