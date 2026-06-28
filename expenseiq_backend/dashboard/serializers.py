@@ -41,3 +41,20 @@ class CategoryBreakdownSerializer(serializers.Serializer):
         max_digits=10,
         decimal_places=2
     )
+
+class TrendSerializer(serializers.Serializer):
+    period = serializers.SerializerMethodField()
+    amount = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2
+    )
+    def get_period(self, obj):
+
+        request = self.context["request"]
+        period = request.query_params.get("period", "monthly")
+        
+
+        if period == "yearly":
+            return obj["period"].strftime("%Y")
+
+        return obj["period"].strftime("%b")

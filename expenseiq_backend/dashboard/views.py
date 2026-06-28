@@ -12,6 +12,8 @@ from expenses.models import Expense
 from budgets.models import Budget
 from django.db.models import F, Sum
 from django.db.models.functions import Coalesce
+from .serializers import TrendSerializer
+from django.db.models.functions import TruncMonth, TruncYear
 
 
 class DashboardSummaryView(APIView):
@@ -97,4 +99,55 @@ class CategoryBreakdownView(ListAPIView):
                 amount=Sum("amount")
             )
             .order_by("-amount")
+        )
+
+class TrendView(ListAPIView):
+
+    serializer_class = TrendSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+
+        period = self.request.query_params.get(
+            "period",
+            "monthly"
+        )
+        today = date.today()
+
+        queryset = Expense.objects.filter(
+            user=self.request.user
+        )
+
+        if period == "yearly":
+
+            current_year = today.year
+
+            return (
+                queryset
+                .filter(
+                    date__year__gte=current_year - 4
+                )
+                .annotate(
+                    period=TruncYear("date")
+                )
+                .values("period")
+                .annotate(
+                    amount=Sum("amount")
+                )
+                .order_by("period")
+            )
+
+        return (
+            queryset
+            .filter(
+                date__year=today.year
+            )
+            .annotate(
+                period=TruncMonth("date")
+            )
+            .values("period")
+            .annotate(
+                amount=Sum("amount")
+            )
+            .order_by("period")
         )

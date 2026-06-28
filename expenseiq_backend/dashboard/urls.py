@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import DashboardSummaryView, RecentExpenseView, CategoryBreakdownView
+from .views import DashboardSummaryView, RecentExpenseView, CategoryBreakdownView, TrendView
 
 urlpatterns = [
     path(
@@ -17,4 +17,9 @@ urlpatterns = [
         CategoryBreakdownView.as_view(),
         name="category-breakdown"
     ),
+    path(
+        "trend/",
+        TrendView.as_view(),
+        name="trend"
+    )
 ]
