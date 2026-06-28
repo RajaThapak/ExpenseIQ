@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from expenses.models import Expense
 
 
 class DashboardSummarySerializer(serializers.Serializer):
@@ -18,3 +19,25 @@ class DashboardSummarySerializer(serializers.Serializer):
     )
 
     transactions = serializers.IntegerField()
+
+class RecentExpenseSerializer(serializers.ModelSerializer):
+
+    category = serializers.CharField(source="category.name")
+
+    class Meta:
+        model = Expense
+        fields = [
+            "id",
+            "title",
+            "amount",
+            "category",
+            "date"
+        ]
+
+
+class CategoryBreakdownSerializer(serializers.Serializer):
+    category = serializers.CharField(source="category__name")
+    amount = serializers.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )

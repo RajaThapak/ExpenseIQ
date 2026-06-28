@@ -1,14 +1,17 @@
 from decimal import Decimal
+from django.db import models
 from datetime import date
-
+from rest_framework.generics import ListAPIView
 from django.db.models import Sum
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .serializers import DashboardSummarySerializer
-
+from .serializers import DashboardSummarySerializer,CategoryBreakdownSerializer
+from .serializers import RecentExpenseSerializer
 from expenses.models import Expense
 from budgets.models import Budget
+from django.db.models import F, Sum
+from django.db.models.functions import Coalesce
 
 
 class DashboardSummaryView(APIView):
@@ -66,3 +69,32 @@ class DashboardSummaryView(APIView):
         serializer = DashboardSummarySerializer(data)
 
         return Response(serializer.data)
+
+class RecentExpenseView(ListAPIView):
+
+    serializer_class = RecentExpenseSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return (
+            Expense.objects
+            .filter(user=self.request.user)
+            .select_related("category")
+            .order_by("-date", "-created_at")[:5]
+        )
+
+class CategoryBreakdownView(ListAPIView):
+
+    serializer_class = CategoryBreakdownSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return (
+            Expense.objects
+            .filter(user=self.request.user)
+            .values("category__name")
+            .annotate(
+                amount=Sum("amount")
+            )
+            .order_by("-amount")
+        )
