@@ -12,8 +12,9 @@ from expenses.models import Expense
 from budgets.models import Budget
 from django.db.models import F, Sum
 from django.db.models.functions import Coalesce
-from .serializers import TrendSerializer
+from .serializers import TrendSerializer,BudgetStatusSerializer
 from django.db.models.functions import TruncMonth, TruncYear
+from django.utils import timezone
 
 
 class DashboardSummaryView(APIView):
@@ -151,3 +152,63 @@ class TrendView(ListAPIView):
             )
             .order_by("period")
         )
+
+class BudgetStatusView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        today = timezone.now().date()
+
+        budget = (
+            Budget.objects.filter(
+                user=request.user,
+                start_date__lte=today,
+                end_date__gte=today
+            ).first()
+        )
+
+        if not budget:
+            return Response({
+                "budget": "0.00",
+                "spent": "0.00",
+                "remaining": "0.00",
+                "percentage_used": 0,
+                "status": "No Budget"
+            })
+
+        spent = (
+            Expense.objects
+            .filter(
+                user=request.user,
+                date__gte=budget.start_date,
+                date__lte=budget.end_date
+            )
+            .aggregate(
+                total=Coalesce(Sum("amount"), Decimal("0.00"))
+            )["total"]
+        )
+
+        remaining = budget.amount - spent
+
+        percentage = (
+            float(spent / budget.amount * 100)
+            if budget.amount > 0
+            else 0
+        )
+
+        status = (
+            "Over Budget"
+            if spent > budget.amount
+            else "Within Budget"
+        )
+
+        serializer = BudgetStatusSerializer({
+            "budget": budget.amount,
+            "spent": spent,
+            "remaining": remaining,
+            "percentage_used": round(percentage, 2),
+            "status": status
+        })
+
+        return Response(serializer.data)

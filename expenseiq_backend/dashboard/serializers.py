@@ -58,3 +58,19 @@ class TrendSerializer(serializers.Serializer):
             return obj["period"].strftime("%Y")
 
         return obj["period"].strftime("%b")
+
+class BudgetStatusSerializer(serializers.Serializer):
+    budget = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2
+    )
+    spent = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2
+    )
+    remaining = serializers.DecimalField(
+        max_digits=12,
+        decimal_places=2
+    )
+    percentage_used = serializers.FloatField()
+    status = serializers.CharField()
