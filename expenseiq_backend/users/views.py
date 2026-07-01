@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework.permissions import AllowAny
 
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer
@@ -123,6 +124,7 @@ class LogoutView(APIView):
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]

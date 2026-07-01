@@ -40,12 +40,12 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
     'django_filters',
-    "corsheaders",
     'users',
     "categories",
     "expenses",
     "budgets",
     "dashboard",
+    "corsheaders",
 ]
 
 # Custom User Model
@@ -147,6 +147,14 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://192.168.186.224:5173",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://192.168.186.224:5173",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
