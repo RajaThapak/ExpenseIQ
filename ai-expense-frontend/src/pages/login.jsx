@@ -1,20 +1,53 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
-const AUTH_KEY = "expenseiq-auth";
+
 
 export function LoginForm({ onClose, onRegisterClick }) {
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    localStorage.setItem(AUTH_KEY, "true");
+  const { checkAuth } = useAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  setLoading(true);
+  setError("");
+
+  try {
+    await loginUser({
+      email,
+      password,
+    });
+
+    // Load authenticated user into AuthContext
+    await checkAuth();
 
     if (typeof onClose === "function") {
       onClose();
     }
 
     navigate("/dashboard");
-  };
+
+  } catch (err) {
+    setError(
+      err.response?.data?.detail ||
+      (err.request
+        ? "Unable to reach server. Please check backend is running and try again."
+        : "Invalid email or password.")
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="relative w-full max-w-md rounded-[2rem] border border-white/70 bg-white/80 p-8 shadow-[0_30px_80px_rgba(91,75,255,0.18)] backdrop-blur-xl">
@@ -47,6 +80,8 @@ export function LoginForm({ onClose, onRegisterClick }) {
             id="login-email"
             type="email"
             placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#5b4bff] focus:ring-4 focus:ring-[#5b4bff]/10"
           />
         </div>
@@ -59,15 +94,23 @@ export function LoginForm({ onClose, onRegisterClick }) {
             id="login-password"
             type="password"
             placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#5b4bff] focus:ring-4 focus:ring-[#5b4bff]/10"
           />
         </div>
+        {error && (
+          <p className="text-sm text-red-500">
+            {error}
+          </p>
+        )}
 
         <button
           type="submit"
-          className="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-[#5b4bff] to-[#6d28d9] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_18px_45px_rgba(91,75,255,0.28)] transition hover:brightness-105"
+          disabled={loading}
+          className="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-[#5b4bff] to-[#6d28d9] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_18px_45px_rgba(91,75,255,0.28)] transition hover:brightness-105 disabled:opacity-70"
         >
-          Login
+          {loading ? "Signing In..." : "Login"}
         </button>
 
         <button
